@@ -30,7 +30,7 @@ export default function NewsItem({
             : `Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere minus
 molestiae maiores laborum quasi suscipit!`}
         </p>
-        <a onClick={() => handleClick(id)} className="btn btn-light">
+        <a onClick={() => handleClick(id)} className="btn btn-dark">
           Summary
         </a>
       </div>

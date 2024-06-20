@@ -63,25 +63,27 @@ export default function NewsBoard({ category }) {
   }
 
   return (
-    <div className="text-center">
+    <div className="">
       <h2 className="text-center mt-3">
         Latest <span className="badge bg-danger">News</span>
       </h2>
-      {article.map((news, index) => {
-        return (
-          <NewsItem
-            key={index}
-            id={index}
-            title={news.title}
-            description={news.description}
-            imageUrl={news.urlToImage}
-            article={news}
-            setDetailView={setDetailView}
-          />
-        )
-      })}
+      <div className="d-flex justify-content-center  flex-wrap ">
+        {article.map((news, index) => {
+          return (
+            <NewsItem
+              key={index}
+              id={index}
+              title={news.title}
+              description={news.description}
+              imageUrl={news.urlToImage}
+              article={news}
+              setDetailView={setDetailView}
+            />
+          )
+        })}
+      </div>
 
-      <nav aria-label="Page navigation example ">
+      <nav aria-label="Page navigation  ">
         <ul className="pagination justify-content-center ">
           <li className="page-item ">
             <a
