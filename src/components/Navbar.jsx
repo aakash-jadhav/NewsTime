@@ -11,7 +11,7 @@ export default function Navbar({ setCategory, category }) {
           <span className="badge bg-light text-dark fs-4">NewsTime</span>
         </a>
 
-        {/* <button
+        <button
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
@@ -21,7 +21,7 @@ export default function Navbar({ setCategory, category }) {
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
-        </button> */}
+        </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav">
             <li className="nav-item cursor-pointer">

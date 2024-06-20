@@ -1,7 +1,11 @@
 import React from "react"
 import NewsItem from "./NewsItem"
+import NewsDetail from "./NewsDetail"
 export default function NewsBoard({ category }) {
   const [article, setArticle] = React.useState([])
+  const [detailView, setDetailView] = React.useState(null)
+  const [error, setError] = React.useState(null)
+  const [loading, setLoading] = React.useState(true)
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -9,17 +13,44 @@ export default function NewsBoard({ category }) {
         let url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=${
           import.meta.env.VITE_API_KEY
         }`
+        setLoading(true)
         const response = await fetch(url)
-        const data = await response.json()
-        setArticle(data.articles)
+        if (response.status >= 400) {
+          throw new Error("Server Error")
+        } else {
+          const data = await response.json()
+          setArticle(data.articles)
+          setError(null)
+        }
       } catch (error) {
         console.error("Error fetching data:", error)
+        setError(error)
+      } finally {
+        setLoading(false)
       }
     }
 
     fetchData()
   }, [category])
-  console.log("article", article)
+
+  if (loading) {
+    return (
+      <div class="text-center mt-5">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    )
+  }
+  if (error) {
+    return <div className="container">Error: {error.message}</div>
+  }
+
+  if (detailView !== null) {
+    return (
+      <NewsDetail article={article[detailView]} setDetailView={setDetailView} />
+    )
+  }
   return (
     <div>
       <h2 className="text-center mt-3">
@@ -29,10 +60,12 @@ export default function NewsBoard({ category }) {
         return (
           <NewsItem
             key={index}
+            id={index}
             title={news.title}
             description={news.description}
             imageUrl={news.urlToImage}
-            newsUrl={news.url}
+            article={news}
+            setDetailView={setDetailView}
           />
         )
       })}
