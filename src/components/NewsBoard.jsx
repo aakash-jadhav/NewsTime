@@ -6,11 +6,12 @@ export default function NewsBoard({ category }) {
   const [detailView, setDetailView] = React.useState(null)
   const [error, setError] = React.useState(null)
   const [loading, setLoading] = React.useState(true)
-
+  const [page, setPage] = React.useState(1)
+  const [totalResults, setTotalResults] = React.useState(0)
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&apiKey=${
+        let url = `https://newsapi.org/v2/top-headlines?country=in&category=${category}&pageSize=9&page=${page}&apiKey=${
           import.meta.env.VITE_API_KEY
         }`
         setLoading(true)
@@ -21,6 +22,7 @@ export default function NewsBoard({ category }) {
           const data = await response.json()
           setArticle(data.articles)
           setError(null)
+          setTotalResults(data.totalResults)
         }
       } catch (error) {
         console.error("Error fetching data:", error)
@@ -31,13 +33,13 @@ export default function NewsBoard({ category }) {
     }
 
     fetchData()
-  }, [category])
+  }, [category, page])
 
   if (loading) {
     return (
-      <div class="text-center mt-5">
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
+      <div className="text-center mt-5">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
       </div>
     )
@@ -51,8 +53,17 @@ export default function NewsBoard({ category }) {
       <NewsDetail article={article[detailView]} setDetailView={setDetailView} />
     )
   }
+
+  function handlePrevClick() {
+    setPage((prevPage) => prevPage - 1)
+  }
+  function handleNextClick() {
+    if (page * 9 >= totalResults) return
+    setPage((prevPage) => prevPage + 1)
+  }
+
   return (
-    <div>
+    <div className="text-center">
       <h2 className="text-center mt-3">
         Latest <span className="badge bg-danger">News</span>
       </h2>
@@ -70,28 +81,53 @@ export default function NewsBoard({ category }) {
         )
       })}
 
-      <nav aria-label="Page navigation example">
-        <ul className="pagination justify-content-center">
-          <li className="page-item disabled">
-            <a className="page-link">Previous</a>
-          </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              1
+      <nav aria-label="Page navigation example ">
+        <ul className="pagination justify-content-center ">
+          <li className="page-item ">
+            <a
+              className={`page-link ${page <= 1 && "disabled"}`}
+              onClick={handlePrevClick}
+            >
+              Previous
             </a>
           </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              2
+
+          <li className={`page-item ${page === 1 && "active"}`}>
+            <a
+              className="page-link"
+              onClick={page <= 1 ? null : handlePrevClick}
+            >
+              {page === 1 ? page : page - 1}
             </a>
           </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
-              3
+
+          <li className={`page-item ${page > 1 ? "active" : ""}`}>
+            <a
+              className="page-link"
+              onClick={page === 1 ? handleNextClick : null}
+            >
+              {page === 1 ? page + 1 : page}
             </a>
           </li>
-          <li className="page-item">
-            <a className="page-link" href="#">
+
+          <li className="page-item ">
+            <a
+              className="page-link"
+              onClick={() => {
+                page === 1 ? setPage(3) : handleNextClick()
+              }}
+            >
+              {page === 1 ? page + 2 : page + 1}
+            </a>
+          </li>
+
+          <li className="page-item ">
+            <a
+              className={`page-link  ${
+                page * 9 >= totalResults ? "disabled" : ""
+              }`}
+              onClick={handleNextClick}
+            >
               Next
             </a>
           </li>

@@ -40,7 +40,7 @@ export default function NewsDetail({ article, setDetailView }) {
             </p>
           </div>
         </div>
-        <div class="alert alert-secondary" role="alert">
+        <div className="alert alert-secondary" role="alert">
           <a href={article.url}>Click here</a> to visit source website.
         </div>
       </div>
