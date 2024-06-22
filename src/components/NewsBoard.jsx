@@ -25,7 +25,6 @@ export default function NewsBoard({ category }) {
           setTotalResults(data.totalResults)
         }
       } catch (error) {
-        console.error("Error fetching data:", error)
         setError(error)
       } finally {
         setLoading(false)

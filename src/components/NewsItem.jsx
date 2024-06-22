@@ -7,7 +7,6 @@ export default function NewsItem({
   setDetailView,
 }) {
   function handleClick(id) {
-    console.log("id", id)
     setDetailView(id)
   }
   return (

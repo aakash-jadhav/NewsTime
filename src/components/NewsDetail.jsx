@@ -2,7 +2,6 @@ import React from "react"
 import image from "../assets/news.jpg"
 
 export default function NewsDetail({ article, setDetailView }) {
-  console.log(article)
   return (
     <>
       <div className="back container my-3">
