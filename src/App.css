@@ -1,3 +1,18 @@
 .page-link {
   cursor: pointer;
 }
+.card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Adjust for number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Adjust for number of lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

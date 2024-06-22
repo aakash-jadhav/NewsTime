@@ -7,7 +7,7 @@ export default function NewsDetail({ article, setDetailView }) {
       <div className="back container my-3">
         <button
           type="button"
-          class="btn btn-secondary"
+          className="btn btn-secondary"
           onClick={() => setDetailView(null)}
         >
           Back
@@ -24,7 +24,7 @@ export default function NewsDetail({ article, setDetailView }) {
         <div className="container-sm">
           <p>{article?.description || "Description not available. "}</p>
           <p>{article?.content || "Content not available"}</p>
-          <div class="alert alert-light" role="alert">
+          <div className="alert alert-light" role="alert">
             <p>
               <b>Published at </b>
               {article.publishedAt}
