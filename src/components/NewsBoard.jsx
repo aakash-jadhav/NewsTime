@@ -75,7 +75,6 @@ export default function NewsBoard({ category }) {
               title={news.title}
               description={news.description}
               imageUrl={news.urlToImage}
-              article={news}
               setDetailView={setDetailView}
             />
           )
